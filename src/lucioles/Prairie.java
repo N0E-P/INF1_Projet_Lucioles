@@ -40,7 +40,7 @@ public class Prairie {
 	public static int[][] prairieVide(int nbLignes, int nbColonnes) {
 		int[][] prairieVide = new int[nbLignes][nbColonnes];
 		for (int i = 0; i < nbLignes; i++) {
-			for (int j = 0; j < nbLignes; j++) {
+			for (int j = 0; j < nbColonnes; j++) {
 				prairieVide[i][j] = -1;
 			}
 		}
@@ -79,20 +79,38 @@ public class Prairie {
 		}
 		afficheLigneHashTag(prairie);
 	}
-	/*
-	 * public static void prairieLucioles (int nbLignes, int nbColonnes, double[][]
-	 * population){
-	 * 
-	 * int[][] prairie = prairieVide(nbLignes, nbColonnes);
-	 * population.length
-	 * 
-	 * 
-	 * }
-	 */
+
+	public static int[][] prairieLucioles(int nbLignes, int nbColonnes, double[][] population) {
+		int[][] prairie = prairieVide(nbLignes, nbColonnes);
+
+		int numeroLuciole = 0;
+
+		for (int ligne = 0; ligne < nbLignes; ligne++) {
+			for (int colonne = 0; colonne < nbColonnes; colonne++) {
+				if (50 < RandomGen.rGen.nextInt(100)
+						& numeroLuciole < population.length) {
+					prairie[ligne][colonne] = numeroLuciole;
+					numeroLuciole++;
+				}
+			}
+		}
+		return prairie;
+	}
 
 	public static void main(String[] args) {
-		double[][] population = creerPopulation(800);
-		int[][] prairieVide = prairieVide(25, 50);
-		affichePrairie(prairieVide, population);
+		double[][] population = creerPopulation(500);
+		int[][] prairie = prairieLucioles(25, 50, population);
+		affichePrairie(prairie, population);
+
+		/*
+		 * Revoir le if pour la randomness des cases affichées
+		 * 
+		 * int nbEspacesAFaireEnTout = nbLignes * nbColonnes - population.length;
+		 * faire en sorte qu'il y ait autant d'espaces que ce nombre
+		 * 
+		 * int nbCasesEnTout = nbLignes * nbColonnes;
+		 * 
+		 * int recurenceMoyenneDesEspaces = nbEspacesAFaireEnTout / nbCasesEnTout;
+		 */
 	}
 }
